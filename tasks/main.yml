@@ -4,7 +4,7 @@
     name: "{{ az_network_security_group_name }}"
     resource_group: "{{ az_resource_group_name }}"
     rules:
-      - name: "{{ item[1].Name }}"
+      - name: "{{ item[1].name }}"
         protocol: "{{ item[1].protocol }}"
         destination_port_range: "{{ item[1].destination_port_range }}"
         access: "{{ item[1].access }}"
