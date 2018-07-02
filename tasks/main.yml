@@ -18,20 +18,19 @@
     label: "{{ azure_tag.name }}"
   register: CreatedNetworkSecurityGroup
 
-# - name: Ensure Rules Exists in Network Security Group
-#   azure_rm_securitygroup:
-#     name:
-#     resource_group:
-#     rules:
-#       - name: "{{ nsg_rule.name }}"
-#         protocol: "{{ nsg_rule.protocol }}"
-#         destination_port_range: "{{ nsg_rule.destination_port_range }}"
-#         access: "{{ nsg_rule.access }}"
-#         priority: "{{ nsg_rule.priority }}"
-#         direction: "{{ nsg_rule.direction }}"
-#   loop:
-#     - "{{ az_network_security_group_rules }}"
-#   loop_control:
-#     loop_var: nsg_rule
-#     label: "{{ nsg_rule.name }}"
+- name: Ensure Rules Exists in Network Security Group
+  azure_rm_securitygroup: 
+    name: "{{ az_network_security_group_name }}"
+    resource_group: "{{ az_resource_group_name }}"
+    rules:
+      - name: "{{ nsg_rule.name }}"
+        protocol: "{{ nsg_rule.protocol }}"
+        destination_port_range: "{{ nsg_rule.destination_port_range }}"
+        access: "{{ nsg_rule.access }}"
+        priority: "{{ nsg_rule.priority }}"
+        direction: "{{ nsg_rule.direction }}"
+  loop: "{{ az_network_security_group_rules }}"
+  loop_control:
+    loop_var: nsg_rule
+    label: "{{ nsg_rule.name }}"
 ...
