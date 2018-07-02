@@ -12,8 +12,7 @@
       Owner: "{{ azure_tag.Owner }}"
       Company: "{{ azure_tag.Company }}"
       Project: "{{ azure_tag.Project }}"
-  loop:
-    - "{{ azure_tags }}"
+  loop: "{{ azure_tags }}"
   loop_control:
     loop_var: azure_tag
     label: "{{ azure_tag.name }}"
