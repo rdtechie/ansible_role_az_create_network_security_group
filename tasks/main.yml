@@ -3,7 +3,6 @@
   azure_rm_securitygroup:
     name: "{{ az_network_security_group_name }}"
     resource_group: "{{ az_resource_group_name }}"
-    purge_rules: yes
     rules:
       - name: "{{ item[1].name }}"
         protocol: "{{ item[1].protocol }}"
@@ -20,7 +19,7 @@
       Owner: "{{ item[0].Owner }}"
       Company: "{{ item[0].Company }}"
       Project: "{{ item[0].Project }}"
-  with_nested:
+  loop:
     - "{{ azure_tags }}"
     - "{{ az_network_security_group_rules }}"
   register: CreatedNetworkSecurityGroup
