@@ -1,4 +1,9 @@
 ---
+- name: Set Azure Tags
+  set_fact: 
+    az_tags_dict: "{{ (az_tags_dict|default({}))|combine({item.key: item.value}) }}"
+  loop: "{{ azure_tags|dict2items }}"
+
 - name: Ensure Network Security Group Exists
   azure_rm_securitygroup:
     name: "{{ az_network_security_group_name }}"
@@ -9,13 +14,6 @@
     subscription_id: "{{ azure_subscription_id }}"
     client_id: "{{ azure_client_id }}"
     secret: "{{ azure_client_secret }}"
-    tags:
-      Owner: "{{ azure_tag.Owner }}"
-      Company: "{{ azure_tag.Company }}"
-      Project: "{{ azure_tag.Project }}"
-  loop: "{{ azure_tags }}"
-  loop_control:
-    loop_var: azure_tag
-    label: "{{ azure_tag.name }}"
+    tags: "{{ az_tags_dict }}"
   register: CreatedNetworkSecurityGroup
 ...
