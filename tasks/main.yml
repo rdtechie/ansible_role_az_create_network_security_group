@@ -22,8 +22,9 @@
   azure_rm_securitygroup: 
     name: "{{ az_network_security_group_name }}"
     resource_group: "{{ az_resource_group_name }}"
+    state: "present"
     rules:
-      - name: "{{ nsg_rule.value.name }}"
+      - name: "{{ nsg_rule.key }}"
         protocol: "{{ nsg_rule.value.protocol }}"
         destination_port_range: "{{ nsg_rule.value.destination_port_range }}"
         access: "{{ nsg_rule.value.access }}"
@@ -36,6 +37,6 @@
   loop: "{{ az_network_security_group_rules|dict2items }}"
   loop_control:
     loop_var: nsg_rule
-    label: "{{ nsg_rule.value.name }}"
+    label: "{{ nsg_rule.key }}"
     pause: 5
 ...
