@@ -37,4 +37,5 @@
   loop_control:
     loop_var: nsg_rule
     label: "{{ nsg_rule.value.name }}"
+    pause: 5
 ...
