@@ -3,24 +3,36 @@
   azure_rm_securitygroup:
     name: "{{ az_network_security_group_name }}"
     resource_group: "{{ az_resource_group_name }}"
-    rules:
-      - name: "{{ item[1].name }}"
-        protocol: "{{ item[1].protocol }}"
-        destination_port_range: "{{ item[1].destination_port_range }}"
-        access: "{{ item[1].access }}"
-        priority: "{{ item[1].priority }}"
-        direction: "{{ item[1].direction }}"
     state: "present"
     tenant: "{{ azure_tenant_id }}"
     subscription_id: "{{ azure_subscription_id }}"
     client_id: "{{ azure_client_id }}"
     secret: "{{ azure_client_secret }}"
     tags:
-      Owner: "{{ item[0].Owner }}"
-      Company: "{{ item[0].Company }}"
-      Project: "{{ item[0].Project }}"
+      Owner: "{{ azure_tag.Owner }}"
+      Company: "{{ azure_tag.Company }}"
+      Project: "{{ azure_tag.Project }}"
   loop:
     - "{{ azure_tags }}"
-    - "{{ az_network_security_group_rules }}"
+  loop_control:
+    loop_var: azure_tag
+    label: "{{ azure_tag.name }}"
   register: CreatedNetworkSecurityGroup
+
+# - name: Ensure Rules Exists in Network Security Group
+#   azure_rm_securitygroup:
+#     name:
+#     resource_group:
+#     rules:
+#       - name: "{{ nsg_rule.name }}"
+#         protocol: "{{ nsg_rule.protocol }}"
+#         destination_port_range: "{{ nsg_rule.destination_port_range }}"
+#         access: "{{ nsg_rule.access }}"
+#         priority: "{{ nsg_rule.priority }}"
+#         direction: "{{ nsg_rule.direction }}"
+#   loop:
+#     - "{{ az_network_security_group_rules }}"
+#   loop_control:
+#     loop_var: nsg_rule
+#     label: "{{ nsg_rule.name }}"
 ...
