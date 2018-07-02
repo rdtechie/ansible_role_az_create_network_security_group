@@ -23,18 +23,18 @@
     name: "{{ az_network_security_group_name }}"
     resource_group: "{{ az_resource_group_name }}"
     rules:
-      - name: "{{ nsg_rule.name }}"
-        protocol: "{{ nsg_rule.protocol }}"
-        destination_port_range: "{{ nsg_rule.destination_port_range }}"
-        access: "{{ nsg_rule.access }}"
-        priority: "{{ nsg_rule.priority }}"
-        direction: "{{ nsg_rule.direction }}"
+      - name: "{{ nsg_rule.value.name }}"
+        protocol: "{{ nsg_rule.value.protocol }}"
+        destination_port_range: "{{ nsg_rule.value.destination_port_range }}"
+        access: "{{ nsg_rule.value.access }}"
+        priority: "{{ nsg_rule.value.priority }}"
+        direction: "{{ nsg_rule.value.direction }}"
     tenant: "{{ azure_tenant_id }}"
     subscription_id: "{{ azure_subscription_id }}"
     client_id: "{{ azure_client_id }}"
     secret: "{{ azure_client_secret }}"
-  loop: "{{ az_network_security_group_rules }}"
+  loop: "{{ az_network_security_group_rules|dict2items }}"
   loop_control:
     loop_var: nsg_rule
-    label: "{{ nsg_rule.name }}"
+    label: "{{ nsg_rule.value.name }}"
 ...
