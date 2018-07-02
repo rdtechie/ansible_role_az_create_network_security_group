@@ -3,6 +3,7 @@
   azure_rm_securitygroup:
     name: "{{ az_network_security_group_name }}"
     resource_group: "{{ az_resource_group_name }}"
+    purge_rules: yes
     rules:
       - name: "{{ item[1].name }}"
         protocol: "{{ item[1].protocol }}"
