@@ -29,6 +29,10 @@
         access: "{{ nsg_rule.access }}"
         priority: "{{ nsg_rule.priority }}"
         direction: "{{ nsg_rule.direction }}"
+    tenant: "{{ azure_tenant_id }}"
+    subscription_id: "{{ azure_subscription_id }}"
+    client_id: "{{ azure_client_id }}"
+    secret: "{{ azure_client_secret }}"
   loop: "{{ az_network_security_group_rules }}"
   loop_control:
     loop_var: nsg_rule
